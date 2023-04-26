@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-d", "YAGO11k", "-m", "TimePlex_base", "-a", "{}", "-l", "crossentropy_loss_AllNeg", "-r", "0.1", "-b", "1500", "-x", "300", "-n", "0", "-v", "1", "-q", "0", "-y", "100", "-g_reg", "2", "-g", "1.0", "--perturb_time", "1", "--mode", "train", "-e", "100", "--save_dir", "yago_timeplex_base"]
+        }
+    ]
+}
+

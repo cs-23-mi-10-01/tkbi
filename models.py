@@ -21,9 +21,9 @@ from models_helper import *
 time_index = {"t_s": 0, "t_s_orig": 1, "t_e": 2, "t_e_orig": 3, "t_str": 4, "t_i": 5}
 
 class TimePlex_base(torch.nn.Module):
-    def __init__(self, entity_count, relation_count, timeInterval_count, embedding_dim, clamp_v=None, reg=2,
+    def __init__(self, entity_count, relation_count, timeInterval_count, embedding_dim = 200, clamp_v=None, reg=2,
                  batch_norm=False, unit_reg=False, normalize_time=True, init_embed=None, time_smoothing_params=None, flag_add_reverse=0,
-                 has_cuda=True, time_reg_wt = 0.0, emb_reg_wt=1.0,  srt_wt=1.0, ort_wt=1.0, sot_wt=0.0):
+                 has_cuda=True, time_reg_wt = 1.0, emb_reg_wt=0.005,  srt_wt=5.0, ort_wt=5.0, sot_wt=5.0):
 
         super(TimePlex_base, self).__init__()
         

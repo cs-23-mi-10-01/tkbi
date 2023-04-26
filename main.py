@@ -20,6 +20,81 @@ from time_prediction.evaluate import evaluate as time_evaluate
 import evaluate
 import pprint
 
+import os
+import json
+from pathlib import Path
+import copy
+
+def read_text(path):
+        in_file = open(path, "r", encoding="utf8")
+        text = in_file.read()
+        in_file.close()
+        return text
+
+def read_json(path):
+    print("Reading from file " + path + "...")
+    in_file = open(path, "r", encoding="utf8")
+    dict = json.load(in_file)
+    in_file.close()
+    return dict
+
+def write_json(path, dict):
+    print("Writing to file " + path + "...")
+    touch(path)
+    out_file = open(path, "w", encoding="utf8")
+    json.dump(dict, out_file, indent=4)
+    out_file.close()
+
+def simulate_dates(start, end, delta):
+    dates = []
+    sim_date = copy.copy(start)
+    while sim_date != end:
+        dates.append(copy.copy(sim_date))
+        sim_date = sim_date + delta
+    return dates + [copy.copy(end)]
+
+
+def remove_unwanted_symbols_from_str(str):
+    return str.replace(' ', ' ')
+
+def remove_unwanted_symbols(dict): 
+    while True:
+        target_key = None
+        for key in dict.keys():
+            if ' ' in key:
+                target_key = key
+                break
+        if target_key is not None:
+            dict[remove_unwanted_symbols_from_str(target_key)] = dict.pop(target_key)
+        else:
+            break
+
+def touch(path):
+    dir = os.path.dirname(path)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    Path(path).touch(exist_ok=True)
+
+def write(path, text):
+    touch(path)
+    out_file = open(path, "w", encoding="utf8")
+    out_file.write(text)
+    out_file.close()
+
+def year_to_iso_format(year):
+    modified_year = year
+    if modified_year == '-' or modified_year == '####':
+        modified_year = "0001"
+    while len(modified_year) < 4:
+        modified_year = "0" + modified_year
+    return modified_year + "-01-01"
+
+def exists(path):
+    return os.path.exists(path)
+
+def date_to_iso(date):
+    return f"{date.year:04d}-{date.month:02d}-{date.day:02d}"
+
 # set random seeds
 torch.manual_seed(32)
 np.random.seed(12)
@@ -253,6 +328,23 @@ def main(mode, dataset, dataset_root, save_dir, tflogs_dir, debug, model_name, m
             mb_start = 0
         max_mini_batch_count = int(max_epochs * ktrain.facts.shape[0] / batch_size)
         print("max_mini_batch_count: %d, eval_batch_size %d" % (max_mini_batch_count, eval_batch_size))
+
+        cache_dir = r"C:\Users\Jeppe\Documents\Unistuff\Master\P10\rank\TimePlex\resources\yago11k\split_original"
+
+        write_json(os.path.join(cache_dir, "date_year2id.json"), datamap.dateYear2id)
+        str_keys = {}
+        for key in datamap.dateYears2intervalId.keys():
+            str_keys[f"({key[0]}, {key[1]})"] = datamap.dateYears2intervalId[key]
+        write_json(os.path.join(cache_dir, "date_years2interval_id.json"), str_keys)
+        write_json(os.path.join(cache_dir, "entity_map.json"), datamap.entity_map)
+        write_json(os.path.join(cache_dir, "id2time_str.json"), datamap.id2TimeStr)
+        write_json(os.path.join(cache_dir, "interval_id2date_years.json"), datamap.intervalId2dateYears)
+        write_json(os.path.join(cache_dir, "relation_map.json"), datamap.relation_map)
+        write_json(os.path.join(cache_dir, "reverse_entity_map.json"), datamap.reverse_entity_map)
+        write_json(os.path.join(cache_dir, "reverse_relation_map.json"), datamap.reverse_relation_map)
+        write_json(os.path.join(cache_dir, "time_str2id.json"), datamap.timeStr2Id)
+        write_json(os.path.join(cache_dir, "id2date_year.json"), datamap.id2dateYear)
+
         tr.start(max_mini_batch_count, [eval_every_x_mini_batches // 20, 20], mb_start, tflogs_dir,
                  )
 
@@ -461,13 +553,13 @@ if __name__ == "__main__":
 
         arguments.save_dir = log_folder + arguments.save_dir
 
-        if not arguments.debug:
-            if not os.path.isdir(arguments.save_dir):
-                print("Making directory (s) %s" % arguments.save_dir)
-                os.makedirs(arguments.save_dir)
-            else:
-                utils.colored_print("yellow", "directory %s already exists" % arguments.save_dir)
-            utils.duplicate_stdout(os.path.join(arguments.save_dir, "log.txt"))
+        # if not arguments.debug:
+        #     if not os.path.isdir(arguments.save_dir):
+        #         print("Making directory (s) %s" % arguments.save_dir)
+        #         os.makedirs(arguments.save_dir)
+        #     else:
+        #         utils.colored_print("yellow", "directory %s already exists" % arguments.save_dir)
+        #     utils.duplicate_stdout(os.path.join(arguments.save_dir, "log.txt"))
 
         if arguments.tflogs_dir is None:
             arguments.tflogs_dir = arguments.save_dir
