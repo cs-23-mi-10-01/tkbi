@@ -13,7 +13,7 @@ class crossentropy_loss(torch.nn.Module):
     def forward(self, positive, negative_1):
         scores = torch.cat([positive, negative_1], dim=-1)
         truth = torch.zeros(positive.shape[0],
-                            dtype=torch.long).cuda()  # positive.shape[1]+negative_1.shape[1]+negative_2.shape[1]).cuda()
+                            dtype=torch.long)  # positive.shape[1]+negative_1.shape[1]+negative_2.shape[1])
         # truth[:, 0] = 1
         truth = torch.autograd.Variable(truth, requires_grad=False)
         losses = self.loss(scores, truth)
@@ -100,7 +100,7 @@ class test(torch.nn.Module):
         scores = torch.cat([positive, negative_1], dim=-1)
         print("scores for pre-built functions", scores.shape)
         truth = torch.zeros(positive.shape[0],
-                            dtype=torch.long).cuda()  # positive.shape[1]+negative_1.shape[1]+negative_2.shape[1]).cuda()
+                            dtype=torch.long)  # positive.shape[1]+negative_1.shape[1]+negative_2.shape[1])
         # truth[:, 0] = 1
         truth = torch.autograd.Variable(truth, requires_grad=False)
         losses_ce = self.loss(scores, truth)
@@ -134,7 +134,7 @@ class logistic_loss(torch.nn.Module):
 
     def forward(self, positive, negative_1):
         scores = torch.cat([positive, negative_1], dim=-1)
-        truth = torch.ones(1, positive.shape[1] + negative_1.shape[1]).cuda()
+        truth = torch.ones(1, positive.shape[1] + negative_1.shape[1])
         truth[0, 0] = -1
         truth = -truth
         truth = torch.autograd.Variable(truth, requires_grad=False)
@@ -150,7 +150,7 @@ class hinge_loss(torch.nn.Module):
 
     def forward(self, positive, negative_1):
         scores = torch.cat([positive, negative_1], dim=-1)
-        truth = torch.ones(1, positive.shape[1] + negative_1.shape[1]).cuda()
+        truth = torch.ones(1, positive.shape[1] + negative_1.shape[1])
         truth[0, 0] = -1
         truth = -truth
         truth = torch.autograd.Variable(truth, requires_grad=False)
@@ -170,7 +170,7 @@ class margin_pairwise_loss(torch.nn.Module):
 
         diff = positive - negative + self.margin
         #diff = torch.max(diff, torch.tensor([0.0]))
-        diff = torch.max(diff, torch.tensor([0.0]).cuda())
+        diff = torch.max(diff, torch.tensor([0.0]))
         # print("max_diff:{}".format(max_diff.size()))
         loss = diff.sum()
         # xx=input()

@@ -154,13 +154,13 @@ def get_time_scores(scoring_function, test_kb, method='greedy-coalescing', load_
 
             if load_to_gpu:
                 s = torch.autograd.Variable(torch.from_numpy(
-                    s).cuda().unsqueeze(1), requires_grad=False)
+                    s).unsqueeze(1), requires_grad=False)
                 r = torch.autograd.Variable(torch.from_numpy(
-                    r).cuda().unsqueeze(1), requires_grad=False)
+                    r).unsqueeze(1), requires_grad=False)
                 o = torch.autograd.Variable(torch.from_numpy(
-                    o).cuda().unsqueeze(1), requires_grad=False)
+                    o).unsqueeze(1), requires_grad=False)
                 t = torch.autograd.Variable(torch.from_numpy(
-                    t).cuda().unsqueeze(1), requires_grad=False)
+                    t).unsqueeze(1), requires_grad=False)
             else:
                 # CPU
                 s = torch.autograd.Variable(torch.from_numpy(
@@ -202,11 +202,11 @@ def get_time_scores(scoring_function, test_kb, method='greedy-coalescing', load_
 
             if load_to_gpu:
                 s = torch.autograd.Variable(torch.from_numpy(
-                    s).cuda().unsqueeze(1), requires_grad=False)
+                    s).unsqueeze(1), requires_grad=False)
                 r = torch.autograd.Variable(torch.from_numpy(
-                    r).cuda().unsqueeze(1), requires_grad=False)
+                    r).unsqueeze(1), requires_grad=False)
                 o = torch.autograd.Variable(torch.from_numpy(
-                    o).cuda().unsqueeze(1), requires_grad=False)
+                    o).unsqueeze(1), requires_grad=False)
             else:  # CPU
                 s = torch.autograd.Variable(torch.from_numpy(
                     s).unsqueeze(1), requires_grad=False)

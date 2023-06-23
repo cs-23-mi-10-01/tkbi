@@ -61,7 +61,7 @@ def get_pairwise_r_dict(ent_rel_dict_t1, ent_rel_dict_t2):
 
 def func_load_to_gpu(data, load_to_gpu):
     if load_to_gpu:
-        data = data.cuda()
+        data = data
     return data
 
 

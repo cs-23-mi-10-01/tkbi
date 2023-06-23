@@ -80,8 +80,8 @@ class TimePlex_base(torch.nn.Module):
         self.pad_max = torch.tensor([timeInterval_count + 1])
         self.pad_min = torch.tensor([0])
         if self.has_cuda:
-            self.pad_max = self.pad_max.cuda()
-            self.pad_min = self.pad_min.cuda()
+            self.pad_max = self.pad_max
+            self.pad_min = self.pad_min
 
         # '''
         torch.nn.init.normal_(self.E_re.weight.data, 0, 0.05)
@@ -397,8 +397,8 @@ class TComplex_lx(torch.nn.Module):
         self.pad_max = torch.tensor([timeInterval_count + 1])
         self.pad_min = torch.tensor([0])
         if self.has_cuda:
-            self.pad_max = self.pad_max.cuda()
-            self.pad_min = self.pad_min.cuda()
+            self.pad_max = self.pad_max
+            self.pad_min = self.pad_min
 
         # '''
         torch.nn.init.normal_(self.E_re.weight.data, 0, 0.05)
@@ -618,8 +618,8 @@ class TNTComplex_lx(torch.nn.Module):
         self.pad_max = torch.tensor([timeInterval_count + 1])
         self.pad_min = torch.tensor([0])
         if self.has_cuda:
-            self.pad_max = self.pad_max.cuda()
-            self.pad_min = self.pad_min.cuda()
+            self.pad_max = self.pad_max
+            self.pad_min = self.pad_min
 
         # '''
         torch.nn.init.normal_(self.E_re.weight.data, 0, 0.05)
@@ -1862,16 +1862,16 @@ class DE_SimplE(torch.nn.Module):
         time_embedding_dim = entity_embedding_dim
 
         # freq embeddings for the entities
-        self.freq_s = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
-        self.freq_o = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
+        self.freq_s = torch.nn.Embedding(self.entity_count, time_embedding_dim)
+        self.freq_o = torch.nn.Embedding(self.entity_count, time_embedding_dim)
 
         # phi embeddings for the entities
-        self.phi_s = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
-        self.phi_o = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
+        self.phi_s = torch.nn.Embedding(self.entity_count, time_embedding_dim)
+        self.phi_o = torch.nn.Embedding(self.entity_count, time_embedding_dim)
 
         # frequency embeddings for the entities
-        self.amp_s = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
-        self.amp_o = torch.nn.Embedding(self.entity_count, time_embedding_dim).cuda()
+        self.amp_s = torch.nn.Embedding(self.entity_count, time_embedding_dim)
+        self.amp_o = torch.nn.Embedding(self.entity_count, time_embedding_dim)
 
         torch.nn.init.xavier_uniform_(self.freq_s.weight)
         torch.nn.init.xavier_uniform_(self.freq_o.weight)

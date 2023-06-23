@@ -21,7 +21,7 @@ YEAR_MIN = 0
 
 def func_load_to_gpu(data, load_to_gpu):
     if load_to_gpu:
-        data = data.cuda()
+        data = data
     return data
 
 

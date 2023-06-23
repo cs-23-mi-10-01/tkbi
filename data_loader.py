@@ -157,7 +157,7 @@ class data_loader(object):
             ls = self.sample(batch_size, negative_count)
 
         if self.load_to_gpu:
-            ls_ret = [torch.autograd.Variable(torch.from_numpy(x).cuda()) for x in ls]
+            ls_ret = [torch.autograd.Variable(torch.from_numpy(x)) for x in ls]
         else:
             ls_ret = [torch.autograd.Variable(torch.from_numpy(x)) for x in ls]
 

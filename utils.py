@@ -9,7 +9,7 @@ color_map = {"green": 32, "black": 0, "blue": 34, "red": 31, 'yellow': 33}
 
 def func_load_to_gpu(data, load_to_gpu):
     if load_to_gpu:
-        data = data.cuda()
+        data = data
     return data
 
 

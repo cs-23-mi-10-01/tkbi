@@ -579,13 +579,13 @@ class kb(object):
             # ls[i]=(idx_list,char_embeddings)
 
         if load_to_gpu:
-            return [torch.autograd.Variable(torch.from_numpy(x).type(torch.FloatTensor).cuda()) for x in ls_char]
+            return [torch.autograd.Variable(torch.from_numpy(x).type(torch.FloatTensor)) for x in ls_char]
         else:
             return [torch.autograd.Variable(torch.from_numpy(x).type(torch.FloatTensor)) for x in ls_char]
 
         # if load_to_gpu:
-        #     return [(torch.autograd.Variable(torch.from_numpy(x[0]).cuda()),
-        #         torch.autograd.Variable(torch.from_numpy(x[1]).type(torch.FloatTensor).cuda()) ) for x in ls]
+        #     return [(torch.autograd.Variable(torch.from_numpy(x[0])),
+        #         torch.autograd.Variable(torch.from_numpy(x[1]).type(torch.FloatTensor)) ) for x in ls]
         # else:
         #     return [(torch.autograd.Variable(torch.from_numpy(x[0])),
         #         torch.autograd.Variable(torch.from_numpy(x[1]).type(torch.FloatTensor)) ) for x in ls]

@@ -662,20 +662,20 @@ class Ranker(object):
         ## create tensors
         if load_to_gpu:
             s = torch.autograd.Variable(torch.from_numpy(
-                s).cuda().unsqueeze(1), requires_grad=False)
+                s).unsqueeze(1), requires_grad=False)
             r = torch.autograd.Variable(torch.from_numpy(
-                r).cuda().unsqueeze(1), requires_grad=False)
+                r).unsqueeze(1), requires_grad=False)
             o = torch.autograd.Variable(torch.from_numpy(
-                o).cuda().unsqueeze(1), requires_grad=False)
+                o).unsqueeze(1), requires_grad=False)
             t = torch.autograd.Variable(torch.from_numpy(
-                t).cuda().unsqueeze(1), requires_grad=False)
+                t).unsqueeze(1), requires_grad=False)
 
-            knowns_s = torch.from_numpy(knowns_s).cuda()
-            knowns_o = torch.from_numpy(knowns_o).cuda()
+            knowns_s = torch.from_numpy(knowns_s)
+            knowns_o = torch.from_numpy(knowns_o)
             if predict=='r':
-                knowns_r = torch.from_numpy(knowns_r).cuda()
+                knowns_r = torch.from_numpy(knowns_r)
             if predict=='t':
-                knowns_t = torch.from_numpy(knowns_t).cuda()
+                knowns_t = torch.from_numpy(knowns_t)
         else:
             # CPU mode
             s = torch.autograd.Variable(torch.from_numpy(
@@ -786,7 +786,7 @@ class Ranker(object):
                 # before = torch.sum(greater[i])
                 greater[i][knowns_t_e_ind[i]] = greater[i][knowns_t_e_ind[i]] * \
                                                 func_load_to_gpu(torch.from_numpy(knowns_t_e_val[i]).type(
-                                                    'torch.FloatTensor'), self.load_to_gpu)#.cuda()
+                                                    'torch.FloatTensor'), self.load_to_gpu)#
 
         rank = greater.sum(dim=1) + 1  # +equal.sum(dim=1)/2.0
 
@@ -802,7 +802,7 @@ class Ranker(object):
         scores = self.scoring_function(None, r, o, t).data
 
         e1_incompat = self.e1_incompat[start:end]
-        e1_incompat = torch.from_numpy(e1_incompat).cuda()
+        e1_incompat = torch.from_numpy(e1_incompat)
         # print(len(self.e1_incompat),e1_incompat.size(), scores.size(), start, end)
         scores.scatter_(
             1,
@@ -816,7 +816,7 @@ class Ranker(object):
 
         # filtering based on relation temporal ordering constraint
         # e1_incompat=self.e1_incompat[start:end]
-        # e1_incompat=torch.from_numpy(e1_incompat).cuda()
+        # e1_incompat=torch.from_numpy(e1_incompat)
         # scores.scatter_(1, e1_incompat, self.scoring_function.minimum_value)
 
         if 'transE' in self.scoring_function.__class__.__name__:
@@ -832,7 +832,7 @@ class Ranker(object):
 
     def func_load_to_gpu(self, data, load_to_gpu):
         if load_to_gpu:
-            data = data.cuda()
+            data = data
         return data
 
     # --IOU helper functions--#
@@ -978,15 +978,15 @@ def evaluate(name, ranker, kb, batch_size, predict_time=0, predict_time_pair=0, 
 
         if load_to_gpu:
             s = torch.autograd.Variable(torch.from_numpy(
-                s).cuda().unsqueeze(1), requires_grad=False)
+                s).unsqueeze(1), requires_grad=False)
             r = torch.autograd.Variable(torch.from_numpy(
-                r).cuda().unsqueeze(1), requires_grad=False)
+                r).unsqueeze(1), requires_grad=False)
             o = torch.autograd.Variable(torch.from_numpy(
-                o).cuda().unsqueeze(1), requires_grad=False)
+                o).unsqueeze(1), requires_grad=False)
             t = torch.autograd.Variable(torch.from_numpy(
-                t).cuda().unsqueeze(1), requires_grad=False)
+                t).unsqueeze(1), requires_grad=False)
 
-            t_ids = torch.autograd.Variable(torch.from_numpy(t_ids).cuda(), requires_grad=False)
+            t_ids = torch.autograd.Variable(torch.from_numpy(t_ids), requires_grad=False)
 
         else:
             # CPU mode

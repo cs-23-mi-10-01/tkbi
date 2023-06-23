@@ -209,7 +209,7 @@ def main(mode, dataset, dataset_root, save_dir, tflogs_dir, debug, model_name, m
                                       regularizer, expand_mode, flag_add_reverse, batch_norm, has_cuda)
 
     if has_cuda:
-        scoring_function = scoring_function.cuda()
+        scoring_function = scoring_function
 
     if mode == 'train':
         # expand data as needed
